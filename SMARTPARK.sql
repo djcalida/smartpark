@@ -1,0 +1,56 @@
+CREATE DATABASE SMARTPARK;
+GO
+
+USE SMARTPARK;
+GO
+
+CREATE TABLE CUSTOMER (
+    CUSTOMERID INT PRIMARY KEY IDENTITY(1,1),
+    FIRSTNAME VARCHAR(50),
+    MIDDLENAME VARCHAR(50),
+    LASTNAME VARCHAR(50),
+    FULLNAME AS (FIRSTNAME + ' ' + MIDDLENAME + ' ' + LASTNAME),
+    EMAIL VARCHAR(80),
+    PHONENUMBER VARCHAR(20),
+    USERNAME VARCHAR(50),
+    PASSWORD VARCHAR(50),
+    PROFILEPICTURE VARCHAR(50),
+    VALIDIDFRONT VARCHAR(255),
+    VALIDIDBACK VARCHAR(255)
+);
+GO
+
+CREATE PROCEDURE sp_InsertCustomer
+    @FirstName VARCHAR(50),
+    @MiddleName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(80),
+    @PhoneNumber VARCHAR(20),
+    @Username VARCHAR(50),
+    @Password VARCHAR(50),
+    @ProfilePicture VARCHAR(50),
+    @ValidIDFront VARCHAR(255),
+    @ValidIDBack VARCHAR(255)
+AS
+BEGIN
+    INSERT INTO CUSTOMER (
+        FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, PHONENUMBER,
+        USERNAME, PASSWORD, PROFILEPICTURE, VALIDIDFRONT, VALIDIDBACK
+    )
+    VALUES (
+        @FirstName, @MiddleName, @LastName, @Email, @PhoneNumber,
+        @Username, @Password, @ProfilePicture, @ValidIDFront, @ValidIDBack
+    )
+END;
+GO
+
+CREATE PROCEDURE sp_ValidateLogin
+    @Username VARCHAR(50),
+    @Password VARCHAR(50)
+AS
+BEGIN
+    SELECT *
+    FROM CUSTOMER
+    WHERE USERNAME = @Username AND PASSWORD = @Password;
+END;
+GO

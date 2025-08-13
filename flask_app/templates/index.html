@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ESP32 LED Auto Blink</title>
+        <script>
+            function fetchStatus() {
+                fetch('/status').then(response => response.text()).then(state => {
+                    document.getElementById('led-state').textContent = state;
+                    document.getElementById('led-state').style.color = state === 'ON' ? 'green' : 'red';
+                });
+            }
+            setInterval(fetchStatus, 1000);  // Check every second
+            window.onload = fetchStatus;
+        </script>
+    </head>
+    <body style="text-align:center;font-family:sans-serif;">
+        <h1>ESP32 LED Auto Blink</h1>
+        <p>LED is currently: <strong id="led-state">{{state}}</strong></p>
+    </body>
+    hi ako budoy
+</html>

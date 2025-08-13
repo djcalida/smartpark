@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 Dashboard</title>
+    <script>
+        function fetchStatus() {
+            fetch('/api/led-status')
+                .then(response => response.text())
+                .then(state => {
+                    const statusElement = document.getElementById('led-status');
+                    statusElement.textContent = state;
+                    statusElement.style.color = state === 'ON' ? 'green' : 'red';
+                });
+        }
+
+        setInterval(fetchStatus, 1000); // refresh every second
+        window.onload = fetchStatus;
+    </script>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+    <h1>ESP32 LED Auto Blink Dashboard</h1>
+    <p>LED Status: <strong id="led-status">{{ led_status }}</strong></p>
+    <h2>Welcome, {{ customer.FIRSTNAME }}!</h2>
+    <p>Your username: {{ customer.USERNAME }}</p>
+    <p>Hi, {{ customer.FULLNAME }} !</p>
+
+</body>
+</html>
